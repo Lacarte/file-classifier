@@ -22,10 +22,8 @@ logging.basicConfig(
 )
 
 
-
 # Source directory
 src_dir = os.path.expanduser("~/Desktop")
-
 
 
 # Base target path
@@ -34,6 +32,7 @@ base_path = "d:/classifier"
 # Mapping of file extensions to directories
 ext_to_dir = {
     ".jpg": base_path + "/images",
+    ".jpeg": base_path + "/images",
     ".png": base_path + "/images",
     ".bmp": base_path + "/images",
     ".webp": base_path + "/images",
@@ -52,16 +51,17 @@ ext_to_dir = {
     ".flv": src_dir + "/[video]",
     ".wmv": src_dir + "/[video]",
     ".webm": src_dir + "/[video]",
-  
+
 }
 
 # Get the current date to append to filename
 date_str = datetime.now().strftime("%Y-%m-%d")
 
 # Iterate over all files in source directory
+files_move = 0
 for file_name in os.listdir(src_dir):
     file_path = os.path.join(src_dir, file_name)
-    
+
     # Skip directories
     if os.path.isdir(file_path):
         continue
@@ -72,6 +72,7 @@ for file_name in os.listdir(src_dir):
     # Check if this extension is in our mapping
     if ext in ext_to_dir:
         dest_dir = ext_to_dir[ext]
+        files_move += 1
 
         # Make sure the destination directory exists
         os.makedirs(dest_dir, exist_ok=True)
@@ -84,4 +85,7 @@ for file_name in os.listdir(src_dir):
         # Move the file to the destination directory
         shutil.move(file_path, dest_path)
 
-print("Files moved successfully.")
+if (files_move > 0):
+    logging.info(f"{files_move} file(s) moved successfully.")
+else:
+    logging.info("No files were found.")
