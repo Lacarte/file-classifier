@@ -29,21 +29,62 @@ src_dir = os.path.expanduser("~/Desktop")
 # Base target path
 base_path = "d:/classifier"
 
+
+for %%f in (*.txt) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+
+for %%f in (*.zip) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+for %%f in (*.rar) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+for %%f in (*.gz) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+for %%f in (*.tar) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+for %%f in (*.7z) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+for %%f in (*.bz2) do rename "%%f" "%%~nf_!dtt!_%%~xf"
+
+
 # Mapping of file extensions to directories
 ext_to_dir = {
+    ".zip": base_path + "/compressed",
+    ".rar": base_path + "/compressed",
+    ".gz": base_path + "/compressed",
+    ".tar": base_path + "/compressed",
+    ".7z": base_path + "/compressed",
+    ".bz2": base_path + "/compressed",
+  
     ".jpg": base_path + "/images",
     ".jpeg": base_path + "/images",
     ".png": base_path + "/images",
     ".bmp": base_path + "/images",
     ".webp": base_path + "/images",
+    ".jfif": base_path + "/images",
+    ".webp": base_path + "/images",
+    ".jpg-large": base_path + "/images",
+    
     ".doc": base_path + "/documents",
     ".docx": base_path + "/documents",
     ".rtf": base_path + "/documents",
+    ".xls": base_path + "/documents",
+    ".xl": base_path + "/documents",
+    ".ppt": base_path + "/documents",
+    ".ppts": base_path + "/documents",
+    ".pps": base_path + "/documents",
+    ".pptx": base_path + "/documents",
+
     ".pdf": base_path + "/pdf",
     ".exe": base_path + "/exe",
     ".msi": base_path + "/exe",
     ".AppxBundle": base_path + "/exe",
+    ".bat": base_path + "/exe",
+    
+    ".apk": base_path + "/apk",
+    
     ".mp3": src_dir + "/[audio]",
+    ".wma": src_dir + "/[audio]",
+    ".ogg": src_dir + "/[audio]",
+    ".midi": src_dir + "/[audio]",
+    ".mid": src_dir + "/[audio]",
+    ".ogg": src_dir + "/[audio]",
+    ".m4a": src_dir + "/[audio]",
+  
+   
     ".mp4": src_dir + "/[video]",
     ".avi": src_dir + "/[video]",
     ".mov": src_dir + "/[video]",
@@ -51,6 +92,11 @@ ext_to_dir = {
     ".flv": src_dir + "/[video]",
     ".wmv": src_dir + "/[video]",
     ".webm": src_dir + "/[video]",
+    ".f4v": src_dir + "/[video]",
+    ".3gp": src_dir + "/[video]",
+    ".mpeg": src_dir + "/[video]",
+
+
 
 }
 
