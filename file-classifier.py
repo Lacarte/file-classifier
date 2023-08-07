@@ -33,6 +33,8 @@ base_path = "d:/classifier"
 # Mapping of file extensions to directories
 ext_to_dir = {
     
+    ".torrent": base_path + "/torrent-file",
+    
     ".zip": base_path + "/compressed",
     ".rar": base_path + "/compressed",
     ".gz": base_path + "/compressed",
