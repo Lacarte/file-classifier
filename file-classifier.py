@@ -30,18 +30,9 @@ src_dir = os.path.expanduser("~/Desktop")
 base_path = "d:/classifier"
 
 
-for %%f in (*.txt) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-
-for %%f in (*.zip) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-for %%f in (*.rar) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-for %%f in (*.gz) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-for %%f in (*.tar) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-for %%f in (*.7z) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-for %%f in (*.bz2) do rename "%%f" "%%~nf_!dtt!_%%~xf"
-
-
 # Mapping of file extensions to directories
 ext_to_dir = {
+    
     ".zip": base_path + "/compressed",
     ".rar": base_path + "/compressed",
     ".gz": base_path + "/compressed",
