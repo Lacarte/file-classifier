@@ -51,6 +51,7 @@ ext_to_dir = {
     ".png": base_path + "/images",
     ".bmp": base_path + "/images",
     ".webp": base_path + "/images",
+    ".avif": base_path + "/images",
     ".jfif": base_path + "/images",
     ".webp": base_path + "/images",
     ".jpg-large": base_path + "/images",
