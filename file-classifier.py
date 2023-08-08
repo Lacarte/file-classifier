@@ -3,6 +3,9 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 import logging
+import time
+
+
 
 # Create the "logs" directory if it doesn't exist
 if not os.path.exists("logs"):
@@ -33,6 +36,7 @@ base_path = "d:/classifier"
 ext_to_dir = {
     ".jpg": base_path + "/images",
     ".jpeg": base_path + "/images",
+    ".gif": base_path + "/images",
     ".png": base_path + "/images",
     ".bmp": base_path + "/images",
     ".webp": base_path + "/images",
@@ -87,5 +91,21 @@ for file_name in os.listdir(src_dir):
 
 if (files_move > 0):
     logging.info(f"{files_move} file(s) moved successfully.")
+ 
 else:
     logging.info("No files were found.")
+
+timeInSeconds = 15
+while timeInSeconds:
+    mins, secs = divmod(timeInSeconds, 60)
+    timer = '{:02d}'.format(secs)
+    timer = f"\033[92m{timer} seconds\033[0m"  # \033[92m is the escape sequence for light green
+    print(timer, end="\r")
+    time.sleep(1)
+    timeInSeconds -= 1
+
+
+
+
+
+
