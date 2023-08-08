@@ -125,7 +125,10 @@ for file_name in os.listdir(src_dir):
         base_name = Path(file_name).stem
         new_file_name = f"{base_name}_{date_str}{ext}"
         dest_path = os.path.join(dest_dir, new_file_name)
-        logging.info(f"Moving {file_path} to {dest_path}")
+        extracted_path = os.path.dirname(file_path)
+        print("\n")
+        logging.info(f"Source Path: {extracted_path}")
+        logging.info(f"Moving file {new_file_name} to {dest_path}")
         # Move the file to the destination directory
         shutil.move(file_path, dest_path)
 
