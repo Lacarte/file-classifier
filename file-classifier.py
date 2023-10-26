@@ -30,7 +30,8 @@ src_dir = os.path.expanduser("~/Desktop")
 
 
 # Base target path
-base_path = "d:/classifier"
+base_path = "d:/@Classifier"
+
 
 
 # Mapping of file extensions to directories
@@ -74,13 +75,13 @@ ext_to_dir = {
     
     ".apk": base_path + "/apk",
     
-    ".mp3": src_dir + "/[audio]",
-    ".wma": src_dir + "/[audio]",
-    ".ogg": src_dir + "/[audio]",
-    ".midi": src_dir + "/[audio]",
-    ".mid": src_dir + "/[audio]",
-    ".ogg": src_dir + "/[audio]",
-    ".m4a": src_dir + "/[audio]",
+    ".mp3": base_path + "/audio",
+    ".wma": base_path + "/audio",
+    ".ogg": base_path + "/audio",
+    ".midi": base_path + "/audio",
+    ".mid": base_path + "/audio",
+    ".ogg": base_path + "/audio",
+    ".m4a": base_path + "/audio",
   
    
     ".mp4": src_dir + "/[video]",
@@ -93,9 +94,7 @@ ext_to_dir = {
     ".f4v": src_dir + "/[video]",
     ".3gp": src_dir + "/[video]",
     ".mpeg": src_dir + "/[video]",
-
-
-
+  
 }
 
 # Get the current date to append to filename
