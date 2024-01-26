@@ -137,7 +137,7 @@ if (files_move > 0):
 else:
     logging.info("No files were found.")
 
-timeInSeconds = 15
+timeInSeconds = 2
 while timeInSeconds:
     mins, secs = divmod(timeInSeconds, 60)
     timer = '{:02d}'.format(secs)
