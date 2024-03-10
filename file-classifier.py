@@ -84,16 +84,16 @@ ext_to_dir = {
     ".m4a": base_path + "/audio",
   
    
-    ".mp4": src_dir + "/[video]",
-    ".avi": src_dir + "/[video]",
-    ".mov": src_dir + "/[video]",
-    ".mpg": src_dir + "/[video]",
-    ".flv": src_dir + "/[video]",
-    ".wmv": src_dir + "/[video]",
-    ".webm": src_dir + "/[video]",
-    ".f4v": src_dir + "/[video]",
-    ".3gp": src_dir + "/[video]",
-    ".mpeg": src_dir + "/[video]",
+    ".mp4": src_dir + "/@videos",
+    ".avi": src_dir + "/@videos",
+    ".mov": src_dir + "/@videos",
+    ".mpg": src_dir + "/@videos",
+    ".flv": src_dir + "/@videos",
+    ".wmv": src_dir + "/@videos",
+    ".webm": src_dir + "/@videos",
+    ".f4v": src_dir + "/@videos",
+    ".3gp": src_dir + "/@videos",
+    ".mpeg": src_dir + "/@videos",
   
 }
 
