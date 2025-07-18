@@ -5,8 +5,6 @@ from pathlib import Path
 import logging
 import time
 
-
-
 # Create the "logs" directory if it doesn't exist
 if not os.path.exists("logs"):
     os.makedirs("logs")
@@ -24,28 +22,21 @@ logging.basicConfig(
     ],
 )
 
-
 # Source directory
 src_dir = os.path.expanduser("~/Desktop")
-
 
 # Base target path
 base_path = "d:/@Classifier"
 
-
-
 # Mapping of file extensions to directories
 ext_to_dir = {
-    
     ".torrent": base_path + "/torrent-file",
-    
     ".zip": base_path + "/compressed",
     ".rar": base_path + "/compressed",
     ".gz": base_path + "/compressed",
     ".tar": base_path + "/compressed",
     ".7z": base_path + "/compressed",
     ".bz2": base_path + "/compressed",
-  
     ".jpg": base_path + "/images",
     ".jpeg": base_path + "/images",
     ".gif": base_path + "/images",
@@ -54,9 +45,7 @@ ext_to_dir = {
     ".webp": base_path + "/images",
     ".avif": base_path + "/images",
     ".jfif": base_path + "/images",
-    ".webp": base_path + "/images",
     ".jpg-large": base_path + "/images",
-    
     ".doc": base_path + "/documents",
     ".docx": base_path + "/documents",
     ".rtf": base_path + "/documents",
@@ -67,24 +56,18 @@ ext_to_dir = {
     ".ppts": base_path + "/documents",
     ".pps": base_path + "/documents",
     ".pptx": base_path + "/documents",
-
     ".pdf": base_path + "/pdf",
     ".exe": base_path + "/exe",
     ".msi": base_path + "/exe",
     ".AppxBundle": base_path + "/exe",
     ".bat": base_path + "/exe",
-    
     ".apk": base_path + "/apk",
-    
     ".mp3": base_path + "/audio",
     ".wma": base_path + "/audio",
     ".ogg": base_path + "/audio",
     ".midi": base_path + "/audio",
     ".mid": base_path + "/audio",
-    ".ogg": base_path + "/audio",
     ".m4a": base_path + "/audio",
-  
-   
     ".mp4": src_dir + "/@videos",
     ".avi": src_dir + "/@videos",
     ".mov": src_dir + "/@videos",
@@ -95,14 +78,13 @@ ext_to_dir = {
     ".f4v": src_dir + "/@videos",
     ".3gp": src_dir + "/@videos",
     ".mpeg": src_dir + "/@videos",
-  
 }
 
-# Get the current date to append to filename
+# Get current date to append to filename
 date_str = datetime.now().strftime("%Y-%m-%d")
 
-# Iterate over all files in source directory
-files_move = 0
+files_moved = 0
+
 for file_name in os.listdir(src_dir):
     file_path = os.path.join(src_dir, file_name)
 
@@ -110,45 +92,35 @@ for file_name in os.listdir(src_dir):
     if os.path.isdir(file_path):
         continue
 
-    # Get the file extension
     ext = Path(file_path).suffix.lower()
 
-    # Check if this extension is in our mapping
     if ext in ext_to_dir:
         dest_dir = ext_to_dir[ext]
-        files_move += 1
-
-        # Make sure the destination directory exists
         os.makedirs(dest_dir, exist_ok=True)
 
-        # Append the date to the filename
+        # Check available disk space on destination drive
+        dest_drive = os.path.splitdrive(dest_dir)[0] or "/"
+        free_space = shutil.disk_usage(dest_drive).free
+        file_size = os.path.getsize(file_path)
+
+        if free_space < file_size:
+            logging.warning(f"Not enough space to move {file_name} to {dest_dir}")
+            continue
+
         base_name = Path(file_name).stem
         new_file_name = f"{base_name}_{date_str}{ext}"
         dest_path = os.path.join(dest_dir, new_file_name)
-        extracted_path = os.path.dirname(file_path)
-        print("\n")
-        logging.info(f"Source Path: {extracted_path}")
+
         logging.info(f"Moving file {new_file_name} to {dest_path}")
-        # Move the file to the destination directory
         shutil.move(file_path, dest_path)
+        files_moved += 1
 
-if (files_move > 0):
-    logging.info(f"{files_move} file(s) moved successfully.")
- 
+if files_moved:
+    logging.info(f"{files_moved} file(s) moved successfully.")
 else:
-    logging.info("No files were found.")
+    logging.info("No files were moved.")
 
-timeInSeconds = 2
-while timeInSeconds:
-    mins, secs = divmod(timeInSeconds, 60)
-    timer = '{:02d}'.format(secs)
-    timer = f"\033[92m{timer} seconds\033[0m"  # \033[92m is the escape sequence for light green
-    print(timer, end="\r")
+# Simple countdown timer
+for remaining in range(2, 0, -1):
+    print(f"\033[92m{remaining} seconds\033[0m", end="\r")
     time.sleep(1)
-    timeInSeconds -= 1
-
-
-
-
-
-
