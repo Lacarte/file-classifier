@@ -51,6 +51,10 @@ ext_to_dir = {
     ".rtf": base_path + "/documents",
     ".xls": base_path + "/documents",
     ".xlsx": base_path + "/documents",
+<<<<<<< HEAD
+=======
+    ".md": base_path + "/documents",
+>>>>>>> 6c8586812c0bd2b6ce39c76e002419531a4ecb71
     ".xl": base_path + "/documents",
     ".ppt": base_path + "/documents",
     ".ppts": base_path + "/documents",
