@@ -52,12 +52,14 @@ ext_to_dir = {
     ".xls": base_path + "/documents",
     ".xlsx": base_path + "/documents",
     ".md": base_path + "/documents",
+    ".txt": base_path + "/documents",
     ".xl": base_path + "/documents",
     ".ppt": base_path + "/documents",
     ".ppts": base_path + "/documents",
     ".pps": base_path + "/documents",
     ".pptx": base_path + "/documents",
     ".pdf": base_path + "/pdf",
+    ".html": base_path + "/documents",
     ".exe": base_path + "/exe",
     ".msi": base_path + "/exe",
     ".AppxBundle": base_path + "/exe",
@@ -97,24 +99,27 @@ for file_name in os.listdir(src_dir):
 
     if ext in ext_to_dir:
         dest_dir = ext_to_dir[ext]
-        os.makedirs(dest_dir, exist_ok=True)
+        try:
+            os.makedirs(dest_dir, exist_ok=True)
 
-        # Check available disk space on destination drive
-        dest_drive = os.path.splitdrive(dest_dir)[0] or "/"
-        free_space = shutil.disk_usage(dest_drive).free
-        file_size = os.path.getsize(file_path)
+            # Check available disk space on destination drive
+            dest_drive = os.path.splitdrive(dest_dir)[0] or "/"
+            free_space = shutil.disk_usage(dest_drive).free
+            file_size = os.path.getsize(file_path)
 
-        if free_space < file_size:
-            logging.warning(f"Not enough space to move {file_name} to {dest_dir}")
-            continue
+            if free_space < file_size:
+                logging.warning(f"Not enough space to move {file_name} to {dest_dir}")
+                continue
 
-        base_name = Path(file_name).stem
-        new_file_name = f"{base_name}_{date_str}{ext}"
-        dest_path = os.path.join(dest_dir, new_file_name)
+            base_name = Path(file_name).stem
+            new_file_name = f"{base_name}_{date_str}{ext}"
+            dest_path = os.path.join(dest_dir, new_file_name)
 
-        logging.info(f"Moving file {new_file_name} to {dest_path}")
-        shutil.move(file_path, dest_path)
-        files_moved += 1
+            logging.info(f"Moving file {new_file_name} to {dest_path}")
+            shutil.move(file_path, dest_path)
+            files_moved += 1
+        except Exception as e:
+            logging.error(f"Error moving file {file_name}: {e}")
 
 if files_moved:
     logging.info(f"{files_moved} file(s) moved successfully.")
@@ -122,6 +127,6 @@ else:
     logging.info("No files were moved.")
 
 # Simple countdown timer
-for remaining in range(2, 0, -1):
+for remaining in range(10, 0, -1):
     print(f"\033[92m{remaining} seconds\033[0m", end="\r")
     time.sleep(1)
