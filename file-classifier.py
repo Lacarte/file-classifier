@@ -3,7 +3,6 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 import logging
-import time
 
 # Create the "logs" directory if it doesn't exist
 if not os.path.exists("logs"):
@@ -16,7 +15,7 @@ logging.basicConfig(
     handlers=[
         logging.FileHandler(
             f"logs/log-{datetime.now().strftime('%Y-%m-%d')}.log",
-            mode="w",
+            mode="a",
         ),
         logging.StreamHandler(),
     ],
@@ -25,52 +24,56 @@ logging.basicConfig(
 # Source directory
 src_dir = os.path.expanduser("~/Desktop")
 
+# Validate source directory exists
+if not os.path.exists(src_dir):
+    logging.error(f"Source directory {src_dir} does not exist")
+    exit(1)
+
 # Base target path
 base_path = "d:/@Classifier"
 
 # Mapping of file extensions to directories
 ext_to_dir = {
-    ".torrent": base_path + "/torrent-file",
-    ".zip": base_path + "/compressed",
-    ".rar": base_path + "/compressed",
-    ".gz": base_path + "/compressed",
-    ".tar": base_path + "/compressed",
-    ".7z": base_path + "/compressed",
-    ".bz2": base_path + "/compressed",
-    ".jpg": base_path + "/images",
-    ".jpeg": base_path + "/images",
-    ".gif": base_path + "/images",
-    ".png": base_path + "/images",
-    ".bmp": base_path + "/images",
-    ".webp": base_path + "/images",
-    ".avif": base_path + "/images",
-    ".jfif": base_path + "/images",
-    ".jpg-large": base_path + "/images",
-    ".doc": base_path + "/documents",
-    ".docx": base_path + "/documents",
-    ".rtf": base_path + "/documents",
-    ".xls": base_path + "/documents",
-    ".xlsx": base_path + "/documents",
-    ".md": base_path + "/documents",
-    ".txt": base_path + "/documents",
-    ".xl": base_path + "/documents",
-    ".ppt": base_path + "/documents",
-    ".ppts": base_path + "/documents",
-    ".pps": base_path + "/documents",
-    ".pptx": base_path + "/documents",
-    ".pdf": base_path + "/pdf",
-    ".html": base_path + "/documents",
-    ".exe": base_path + "/exe",
-    ".msi": base_path + "/exe",
-    ".AppxBundle": base_path + "/exe",
-    ".bat": base_path + "/exe",
-    ".apk": base_path + "/apk",
-    ".mp3": base_path + "/audio",
-    ".wma": base_path + "/audio",
-    ".ogg": base_path + "/audio",
-    ".midi": base_path + "/audio",
-    ".mid": base_path + "/audio",
-    ".m4a": base_path + "/audio",
+    ".torrent": os.path.join(base_path, "torrent-file"),
+    ".zip": os.path.join(base_path, "compressed"),
+    ".rar": os.path.join(base_path, "compressed"),
+    ".gz": os.path.join(base_path, "compressed"),
+    ".tar": os.path.join(base_path, "compressed"),
+    ".7z": os.path.join(base_path, "compressed"),
+    ".bz2": os.path.join(base_path, "compressed"),
+    ".jpg": os.path.join(base_path, "images"),
+    ".jpeg": os.path.join(base_path, "images"),
+    ".gif": os.path.join(base_path, "images"),
+    ".png": os.path.join(base_path, "images"),
+    ".bmp": os.path.join(base_path, "images"),
+    ".webp": os.path.join(base_path, "images"),
+    ".avif": os.path.join(base_path, "images"),
+    ".jfif": os.path.join(base_path, "images"),
+    ".jpg-large": os.path.join(base_path, "images"),
+    ".doc": os.path.join(base_path, "documents"),
+    ".docx": os.path.join(base_path, "documents"),
+    ".rtf": os.path.join(base_path, "documents"),
+    ".xls": os.path.join(base_path, "documents"),
+    ".xlsx": os.path.join(base_path, "documents"),
+    ".md": os.path.join(base_path, "documents"),
+    ".txt": os.path.join(base_path, "documents"),
+    ".xl": os.path.join(base_path, "documents"),
+    ".ppt": os.path.join(base_path, "documents"),
+    ".pps": os.path.join(base_path, "documents"),
+    ".pptx": os.path.join(base_path, "documents"),
+    ".pdf": os.path.join(base_path, "pdf"),
+    ".html": os.path.join(base_path, "documents"),
+    ".exe": os.path.join(base_path, "exe"),
+    ".msi": os.path.join(base_path, "exe"),
+    ".appxbundle": os.path.join(base_path, "exe"),
+    ".bat": os.path.join(base_path, "exe"),
+    ".apk": os.path.join(base_path, "apk"),
+    ".mp3": os.path.join(base_path, "audio"),
+    ".wma": os.path.join(base_path, "audio"),
+    ".ogg": os.path.join(base_path, "audio"),
+    ".midi": os.path.join(base_path, "audio"),
+    ".mid": os.path.join(base_path, "audio"),
+    ".m4a": os.path.join(base_path, "audio"),
     ".mp4": src_dir + "/@videos",
     ".avi": src_dir + "/@videos",
     ".mov": src_dir + "/@videos",
@@ -115,6 +118,10 @@ for file_name in os.listdir(src_dir):
             new_file_name = f"{base_name}_{date_str}{ext}"
             dest_path = os.path.join(dest_dir, new_file_name)
 
+            if os.path.exists(dest_path):
+                logging.warning(f"File {new_file_name} already exists at {dest_path}, skipping")
+                continue
+
             logging.info(f"Moving file {new_file_name} to {dest_path}")
             shutil.move(file_path, dest_path)
             files_moved += 1
@@ -126,7 +133,8 @@ if files_moved:
 else:
     logging.info("No files were moved.")
 
-# Simple countdown timer
+import time
+
 for remaining in range(10, 0, -1):
-    print(f"\033[92m{remaining} seconds\033[0m", end="\r")
+    print(f"{remaining} seconds to exit...", end="\r")
     time.sleep(1)
