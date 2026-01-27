@@ -57,6 +57,7 @@ ext_to_dir = {
     ".xlsx": os.path.join(base_path, "documents"),
     ".md": os.path.join(base_path, "documents"),
     ".txt": os.path.join(base_path, "documents"),
+    ".json": os.path.join(base_path, "dev"),
     ".xl": os.path.join(base_path, "documents"),
     ".ppt": os.path.join(base_path, "documents"),
     ".pps": os.path.join(base_path, "documents"),
